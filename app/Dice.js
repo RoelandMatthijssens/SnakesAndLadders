@@ -1,11 +1,18 @@
 class Game {
     constructor(description) {
+        this.lambda = () => {
+            const min = 1
+            const max = 6
+            return Math.floor(Math.random() * (max + 1 - min)) + min;
+        }
     }
     roll() {
-        const min = 1
-        const max = 6
-        return Math.floor(Math.random() * (max + 1 - min)) + min;
+        return this.lambda()
     }
+    setLambda(lambda) {
+        this.lambda = lambda
+    }
+
 }
 
 module.exports = Game

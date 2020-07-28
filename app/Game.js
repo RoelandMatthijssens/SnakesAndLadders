@@ -18,6 +18,11 @@ class Game {
     nextPlayer() {
         this.players = this.players.slice(1, this.players.length).concat(this.players.slice(0, 1));
     }
+    playTurn() {
+        this.activePlayer.takeTurn(this.dice)
+        this.board.applyWarps(this.activePlayer)
+        this.nextPlayer()
+    }
 }
 
 module.exports = Game

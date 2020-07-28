@@ -42,5 +42,33 @@ describe('Game', () => {
             g.nextPlayer()
             expect(g.activePlayer.name).toBe('Fulgens');
         });
+        it('should play the turn', () => {
+            p = new Player('Enermis')
+            g.addPlayer(p)
+            expect(p.position).toBe(0);
+            g.playTurn()
+            expect(p.position).toBeGreaterThan(0);
+        });
+        it('uses the game dice to play a player turn', () => {
+            p = new Player('Enermis')
+            g.dice.setLambda(() => { return 15 })
+            g.addPlayer(p)
+            g.playTurn()
+            expect(p.position).toBe(15);
+        });
+        it('should consider warps when playing a turn', () => {
+            p = new Player('Enermis')
+            g.dice.setLambda(() => { return 10 })
+            g.board.addWarp(10, 30)
+            g.addPlayer(p)
+            g.playTurn()
+            expect(p.position).toBe(30);
+        });
+        it('should progress the turn to the next player', () => {
+            g.addPlayer(new Player('Enermis'))
+            g.addPlayer(new Player('Fulgens'))
+            g.playTurn()
+            expect(g.activePlayer.name).toBe('Fulgens');
+        });
     });
 });

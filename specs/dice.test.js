@@ -30,4 +30,10 @@ describe('Dice', () => {
             expect(amount).toBeLessThanOrEqual(avg * 1.25);
         }
     });
+    it('accepts other roll functions', () => {
+        d.setLambda(() => {
+            return 1
+        })
+        expect(d.roll()).toBe(1);
+    });
 });
