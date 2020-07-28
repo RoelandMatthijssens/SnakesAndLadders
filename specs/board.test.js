@@ -1,5 +1,6 @@
 const Board = require('../app/Board')
 const Player = require('../app/Player')
+const Warp = require('../app/Warp')
 
 describe('Board', () => {
     describe('setup', () => {
@@ -13,11 +14,8 @@ describe('Board', () => {
         it('has many tiles', () => {
             expect(b.tiles.length).toBe(200);
         });
-        it('has many snakes', () => {
-            expect(b.snakes).toBeInstanceOf(Array)
-        });
-        it('has many ladders', () => {
-            expect(b.ladders).toBeInstanceOf(Array)
+        it('has many warps', () => {
+            expect(b.warps).toBeInstanceOf(Array)
         });
     });
     describe('behavior', () => {
@@ -28,13 +26,33 @@ describe('Board', () => {
             tile = b.get(12)
             expect(tile.position).toBe(12);
         });
-        it('should add a ladder', () => {
-            b.addLadder(20, 50)
-            expect(b.ladders.length).toBe(1);
+    });
+    describe('warps', () => {
+        beforeEach(() => {
+            b = new Board(20, 10)
+            p = new Player('Enermis')
         });
-        it('should add a snakes', () => {
-            b.addSnake(15, 10)
-            expect(b.snakes.length).toBe(1);
+        describe('Creation', () => {
+            it('should add a warp', () => {
+                b.addWarp(20, 50)
+                expect(b.warps.length).toBe(1);
+                expect(b.warps[0]).toBeInstanceOf(Warp);
+            });
+        });
+        describe('Application', () => {
+            it('applies warps', () => {
+                b.addWarp(20, 50)
+                p.position = 20
+                b.applyWarps(p)
+                expect(p.position).toBe(50);
+            });
+            it('doesnt chain warps', () => {
+                b.addWarp(20, 50)
+                b.addWarp(50, 55)
+                p.position = 20
+                b.applyWarps(p)
+                expect(p.position).toBe(50);
+            });
         });
     });
 });

@@ -1,13 +1,14 @@
 const Tile = require('../app/Tile')
+const Warp = require('../app/Warp')
 
 class Board {
     constructor(height, width) {
         this.height = height
         this.width = width
         this.tiles = []
+        this.warps = []
         this.snakes = []
         this.ladders = []
-        this.players = []
         this.initialize()
     }
     initialize() {
@@ -18,11 +19,23 @@ class Board {
     get(position) {
         return this.tiles[position]
     }
+
+    addWarp(from, to) {
+        this.warps.push(new Warp(from, to))
+    }
     addLadder(from, to) {
-        this.ladders.push(1)
+        this.ladders.push(new Ladder(from, to))
     }
     addSnake(from, to) {
-        this.snakes.push(1)
+        this.snakes.push(new Snake(from, to))
+    }
+    applyWarps(player) {
+        for (const warp of this.warps) {
+            const warped = warp.apply(player)
+            if (warped) {
+                break
+            }
+        }
     }
 }
 
