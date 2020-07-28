@@ -1,4 +1,4 @@
-class Game {
+class Dice {
     constructor(description) {
         this.lambda = () => {
             const min = 1
@@ -15,4 +15,4 @@ class Game {
 
 }
 
-module.exports = Game
+module.exports = Dice
