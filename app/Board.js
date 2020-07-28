@@ -20,6 +20,10 @@ class Board {
         return this.tiles[position]
     }
 
+    get size() {
+        return this.tiles.length
+    }
+
     addWarp(from, to) {
         this.warps.push(new Warp(from, to))
     }

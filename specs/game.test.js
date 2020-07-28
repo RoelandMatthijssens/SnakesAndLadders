@@ -64,11 +64,34 @@ describe('Game', () => {
             g.playTurn()
             expect(p.position).toBe(30);
         });
+        it('should not overshoot the end of the board', () => {
+            p = new Player('Enermis')
+            p.position = 95
+            g.dice.setLambda(() => { return 7 })
+            g.addPlayer(p)
+            g.playTurn()
+            expect(p.position).toBe(96);
+        });
+        it('should still apply ladders when overshooting', () => {
+            p = new Player('Enermis')
+            p.position = 95
+            g.dice.setLambda(() => { return 7 })
+            g.board.addWarp(96, 55)
+            g.addPlayer(p)
+            g.playTurn()
+            expect(p.position).toBe(55);
+        });
         it('should progress the turn to the next player', () => {
             g.addPlayer(new Player('Enermis'))
             g.addPlayer(new Player('Fulgens'))
             g.playTurn()
             expect(g.activePlayer.name).toBe('Fulgens');
+        });
+        it('should know when the game is finished', () => {
+            p = new Player('Enermis')
+            g.addPlayer(p)
+            p.position = 99
+            expect(g.isFinished()).toBeTruthy();
         });
     });
 });

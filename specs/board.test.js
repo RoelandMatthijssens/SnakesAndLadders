@@ -17,6 +17,9 @@ describe('Board', () => {
         it('has many warps', () => {
             expect(b.warps).toBeInstanceOf(Array)
         });
+        it('has a size', () => {
+            expect(b.size).toBe(200)
+        });
     });
     describe('behavior', () => {
         beforeEach(() => {

@@ -20,8 +20,24 @@ class Game {
     }
     playTurn() {
         this.activePlayer.takeTurn(this.dice)
+        this.preventOvershoot(this.activePlayer)
         this.board.applyWarps(this.activePlayer)
         this.nextPlayer()
+    }
+    isFinished() {
+        let finished = false
+        for (const player of this.players) {
+            if (player.position === this.board.size - 1) {
+                finished = true
+            }
+        }
+        return finished
+    }
+    preventOvershoot(player) {
+        const maxPosition = this.board.size - 1
+        if (player.position > maxPosition) {
+            player.position = maxPosition - (player.position - maxPosition)
+        }
     }
 }
 
