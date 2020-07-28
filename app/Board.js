@@ -27,12 +27,7 @@ class Board {
     addWarp(from, to) {
         this.warps.push(new Warp(from, to))
     }
-    addLadder(from, to) {
-        this.ladders.push(new Ladder(from, to))
-    }
-    addSnake(from, to) {
-        this.snakes.push(new Snake(from, to))
-    }
+
     applyWarps(player) {
         for (const warp of this.warps) {
             const warped = warp.apply(player)
